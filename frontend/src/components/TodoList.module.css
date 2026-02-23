@@ -1,0 +1,29 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.state {
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.stateText {
+  margin: 0;
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 1rem;
+  color: #9ca3af;
+}
+
+.errorText {
+  margin: 0;
+  font-size: 1rem;
+  color: #dc2626;
+  font-weight: 500;
+}
