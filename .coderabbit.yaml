@@ -19,6 +19,8 @@ reviews:
     - "!**/.pytest_cache/**"
     - "!**/.mypy_cache/**"
     - "!**/.ruff_cache/**"
+    - "!**/.venv/**"
+    - "!**/venv/**"
     - "!**/frontend/src/vite-env.d.ts"
     - "!**/package-lock.json"
     - "!**/*.pyc"
