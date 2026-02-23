@@ -50,9 +50,9 @@ docker compose up --build
 
 ### Access the Application
 
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000
-- **API Documentation**: http://localhost:8000/docs
+- **Frontend**: <http://localhost:3000>
+- **Backend API**: <http://localhost:8000>
+- **API Documentation**: <http://localhost:8000/docs>
 
 ## Project Structure
 
