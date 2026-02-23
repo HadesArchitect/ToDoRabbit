@@ -1,10 +1,13 @@
 # ToDoRabbit
 
-A sample todo list application demonstrating modern full-stack development practices and developer tooling for AI code review and team onboarding.
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/HadesArchitect/ToDoRabbit?utm_source=oss&utm_medium=github&utm_campaign=HadesArchitect%2FToDoRabbit&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
+A sample monorepo todo list application demonstrating modern full-stack development practices and developer tooling for AI code review and team onboarding.
 
 ## Tech Stack
 
 **Backend:**
+
 - Python 3.11+
 - FastAPI
 - SQLAlchemy (async)
@@ -12,12 +15,14 @@ A sample todo list application demonstrating modern full-stack development pract
 - Pydantic v2
 
 **Frontend:**
+
 - React 18+
 - TypeScript
 - Vite
 - CSS Modules
 
 **Infrastructure:**
+
 - Docker
 - Docker Compose
 - nginx
@@ -51,7 +56,7 @@ docker compose up --build
 
 ## Project Structure
 
-```
+```text
 todo-app/
 ├── backend/           # FastAPI backend with async SQLAlchemy
 ├── frontend/          # React TypeScript frontend with Vite
@@ -110,7 +115,3 @@ Remove all Docker volumes, containers, and build artifacts:
 ```bash
 make clean
 ```
-
----
-
-**Note**: This is a sample application created for demonstration purposes. It is used to showcase AI code review tools, developer onboarding workflows, and modern full-stack development practices. Not intended for production use.
