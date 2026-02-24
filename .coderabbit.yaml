@@ -1,0 +1,121 @@
+# CodeRabbit configuration for Python/TypeScript monorepo
+# Docs: https://docs.coderabbit.ai/getting-started/yaml-configuration
+
+language: "en-US"
+tone_instructions: "Be direct, concise, and professional. Focus on technical accuracy and code quality. Do not use jokes, metaphors, creative writing, or informal language."
+early_access: false
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: true
+  poem: false
+  in_progress_fortune: false
+
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/__pycache__/**"
+    - "!**/dist/**"
+    - "!**/build/**"
+    - "!**/.pytest_cache/**"
+    - "!**/.mypy_cache/**"
+    - "!**/.ruff_cache/**"
+    - "!**/.venv/**"
+    - "!**/venv/**"
+    - "!**/frontend/src/vite-env.d.ts"
+    - "!**/package-lock.json"
+    - "!**/*.pyc"
+    - "!**/*.pyo"
+
+  path_instructions:
+    # Backend: General Python / FastAPI
+    - path: "backend/**/*.py"
+      instructions: |
+        Review Python code with the following focus areas:
+        - FastAPI best practices: use of dependency injection, proper use of APIRouter, response models, and status codes.
+        - SQLAlchemy: check for N+1 query problems, missing eager-loading strategies (selectinload/joinedload), and inefficient queries.
+        - API security: validate all inputs, check for missing authentication/authorization dependencies, sensitive data exposure in responses.
+        - Async correctness: ensure async/await is used consistently; flag blocking I/O calls inside async functions.
+        - Error handling: verify HTTPException is raised with appropriate status codes and detail messages; check for bare except clauses.
+        - Type hints: all function signatures, return types, and class attributes must be fully annotated; prefer strict types over Any.
+        - Code style: follow PEP 8, use descriptive names, avoid magic numbers, keep functions focused and short.
+
+    # Backend: Route handlers
+    - path: "backend/app/routes/**/*.py"
+      instructions: |
+        Review route handlers with additional focus on:
+        - RESTful design: correct HTTP verbs, idiomatic resource naming, appropriate status codes (201 for creation, 204 for deletion, etc.).
+        - Request validation: ensure Pydantic models are used for all request bodies; check field constraints and validators.
+        - Authentication & authorisation: every protected endpoint must declare the correct security dependency.
+        - SQL injection prevention: raw SQL must use parameterised queries; prefer ORM expressions.
+        - Pagination: list endpoints should support limit/offset or cursor-based pagination.
+        - Idempotency: PUT/PATCH handlers should be idempotent; flag side-effects that violate this.
+
+    # Backend: Models and schemas
+    - path: "backend/app/models.py"
+      instructions: |
+        Review SQLAlchemy models with focus on:
+        - Database relationships: verify relationship() declarations, back_populates/backref usage, and cascade settings.
+        - Indexes: ensure columns used in WHERE/JOIN/ORDER BY clauses have appropriate indexes; check for missing unique constraints.
+        - Constraints: check nullable, server_default, ondelete, and check constraints for data integrity.
+        - Naming conventions: table names should be lowercase snake_case; column names descriptive and consistent.
+
+    - path: "backend/app/schemas.py"
+      instructions: |
+        Review Pydantic schemas with focus on:
+        - Separation of concerns: distinct schemas for create, update, and read (response) operations.
+        - Field validation: use field constraints (min_length, max_length, ge, le, regex) where appropriate.
+        - ORM compatibility: confirm orm_mode / model_config is set correctly on response schemas.
+        - Sensitive field exclusion: passwords, secrets, and internal IDs must not appear in response schemas.
+
+    # Frontend: General TypeScript / React
+    - path: "frontend/src/**/*.{ts,tsx}"
+      instructions: |
+        Review TypeScript/React code with the following focus areas:
+        - React hooks: correct dependency arrays in useEffect/useCallback/useMemo; no stale closure issues; hooks called unconditionally at the top level.
+        - Type safety: no use of any or unknown without justification; prefer discriminated unions over boolean flags; type all props and return values.
+        - Accessibility (a11y): every interactive element must be keyboard-operable and have an accessible name; check for missing ARIA attributes.
+        - Performance: avoid unnecessary re-renders; large lists should use virtualization; expensive computations should be memoised.
+        - Error handling: async operations must handle rejected promises; loading and error UI states must be implemented.
+        - Code style: functional components with explicit return types; avoid inline object/function literals in JSX props where they cause re-renders.
+
+    # Frontend: React components
+    - path: "frontend/src/components/**/*.{ts,tsx}"
+      instructions: |
+        Review React components with additional focus on:
+        - WCAG 2.1 AA compliance: colour contrast, focus management, screen-reader announcements for dynamic content.
+        - Semantic HTML: use native elements (<button>, <nav>, <main>, <section>) before reaching for <div>/<span>.
+        - Keyboard navigation: tab order must be logical; interactive elements must be reachable and activatable via keyboard.
+        - Prop validation: all props must have TypeScript types; optional props must have sensible defaults.
+        - Component size: components that exceed ~150 lines should be split; single-responsibility principle.
+
+    # Frontend: API layer
+    - path: "frontend/src/api/**/*.ts"
+      instructions: |
+        Review API client code with focus on:
+        - Error handling: all fetch/axios calls must handle network errors, non-2xx responses, and parse errors explicitly.
+        - Type safety: request payloads and response bodies must be typed; avoid casting to any.
+        - Timeout handling: long-running requests should have an AbortController / timeout configured.
+        - Retry logic: transient failures (5xx, network errors) should be retried with exponential back-off where appropriate.
+        - Base URL / environment: base URLs must come from environment variables, not hard-coded strings.
+
+    # Config files
+    - path: "**/{vite.config.ts,tsconfig*.json,pyproject.toml,*.yaml,*.yml}"
+      instructions: |
+        Review configuration files with focus on:
+        - Security: no secrets, tokens, or credentials; sensitive defaults should be overridden.
+        - Compatibility: check Node/Python version constraints, peer dependency ranges, and TypeScript strict mode settings.
+        - Optimisation: verify tree-shaking, minification, and source-map settings for production builds.
+
+    # Dockerfiles
+    - path: "**/Dockerfile"
+      instructions: |
+        Review Dockerfiles with focus on:
+        - Multi-stage builds: production images must not include build tools, dev dependencies, or source maps.
+        - Security: do not run as root; use a non-privileged USER; do not copy .env files or secrets into the image.
+        - Layer optimisation: COPY dependency manifests and install before copying source to maximise cache reuse.
+        - Base images: pin to specific digest or version tags; prefer slim/alpine variants for production.
+        - Hadolint compliance: follow all default Hadolint rules.
+
+chat:
+  art: false
+  auto_reply: true
