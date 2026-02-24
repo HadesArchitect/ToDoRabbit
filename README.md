@@ -26,6 +26,7 @@ A sample monorepo todo list application demonstrating modern full-stack developm
 - Docker
 - Docker Compose
 - nginx
+- uvicorn
 
 ## Getting Started
 
