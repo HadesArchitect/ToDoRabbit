@@ -2,7 +2,7 @@
 
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/HadesArchitect/ToDoRabbit?utm_source=oss&utm_medium=github&utm_campaign=HadesArchitect%2FToDoRabbit&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
-A sample monorepo todo list application demonstrating modern full-stack development practices and developer tooling for AI code review and team onboarding.
+A sample monorepo todo list application demonstrating modern full-stack development practices and developer tooling for CodeRabbit AI code review.
 
 ## Tech Stack
 
